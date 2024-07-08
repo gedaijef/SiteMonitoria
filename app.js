@@ -1,19 +1,31 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+const alunoRoutes = require('./routes/alunoRoutes');
+const disciplinaRoutes = require('./routes/disciplinaRoutes');
+const monitoriaRoutes = require('./routes/monitoriaRoutes');
+const professorRoutes = require('./routes/professorRoutes');
+const serieRoutes = require('./routes/serieRoutes');
+const turmaRoutes = require('./routes/turmaRoutes');
+
 const app = express();
-const alunoController = require('./controllers/alunoController');
-const monitoriaController = require('./controllers/monitoriaController');
+const port = process.env.PORT || 3000;
 
-app.set('view engine', 'ejs');
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+app.use(bodyParser.json());
 
-app.get('/alunos', alunoController.getAlunos);
-app.post('/adicionar', alunoController.addAluno);
-app.get('/remover/:id', alunoController.removeAluno);
-app.get('/monitorias', monitoriaController.getMonitorias);
-app.post('/adicionarMonitoria', monitoriaController.addMonitoria);
-app.get('/alunos/monitoria', alunoController.getAlunosPorMonitoria)
+app.use('/api/alunos', alunoRoutes);
+app.use('/api/disciplinas', disciplinaRoutes);
+app.use('/api/monitorias', monitoriaRoutes);
+app.use('/api/professores', professorRoutes);
+app.use('/api/series', serieRoutes);
+app.use('/api/turmas', turmaRoutes);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
+
+app.listen(port, () => {
+    console.log(`Servidor rodando na porta http://localhost:${port}`);
+});

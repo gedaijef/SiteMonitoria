@@ -1,47 +1,30 @@
-const { Client } = require('pg');
+const pool = require("./db");
 
-// Configuração da conexão com o banco de dados
-const client = new Client({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'dbmonitoria',
-    password: '1234',
-    port: 5432,
-});
+const Monitoria = {
+  getAll: async () => {
+    const result = await pool.query("SELECT * FROM Monitoria");
+    return result.rows;
+  },
 
-// Conecte-se ao banco de dados
-client.connect();
+  getById: async (id) => {
+    const result = await pool.query("SELECT * FROM Monitoria WHERE id = $1", [
+      id,
+    ]);
+    return result.rows[0];
+  },
 
-// Função para obter as monitorias
-function getMonitorias(callback) {
-    client.query('SELECT * FROM monitoria', (err, res) => {
-        if (err) {
-            throw err;
-        }
-        callback(res.rows);
-    });
-}
-
-// Função para adicionar uma nova monitoria
-function addMonitoria(nome, email) {
-    client.query("INSERT INTO monitoria (nome, email) VALUES ($1, $2)", [nome, email], (err, res) => {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log('Monitoria adicionada com sucesso');
-        }
-    });
-}
-
-// Função para remover uma monitoria
-function removeMonitoria(id) {
-    client.query("DELETE FROM monitoria WHERE id = $1", [id], (err, res) => {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log('Monitoria removida com sucesso');
-        }
-    });
-}
-
-module.exports = { addMonitoria, getMonitorias, removeMonitoria };
+  create: async (
+    aluno_id,
+    serie_id,
+    disciplina_id,
+    turma_id,
+    data,
+    horario
+  ) => {
+    const result = await pool.query(
+      "INSERT INTO Monitoria (aluno_id, serie_id, disciplina_id, turma_id, data, horario) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+      [aluno_id, serie_id, disciplina_id, turma_id, data, horario]
+    );
+    return result.rows[0];
+  },
+};

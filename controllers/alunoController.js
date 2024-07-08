@@ -1,26 +1,20 @@
 const Aluno = require('../models/aluno');
 
-exports.addAluno = (req, res) => {
-    Aluno.addAluno(req.body.nome, req.body.email);
-    res.redirect('/alunos');
-}
+exports.getAllAlunos = async (req, res) => {
+  try {
+    const alunos = await Aluno.getAll();
+    res.json(alunos);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
 
-exports.getAlunos = (req, res) => {
-    Aluno.getAlunos((alunos) => {
-        res.render('index', { alunos });
-    });
-}
-
-exports.removeAluno = (req, res) => {
-    const { id } = req.params;
-    Aluno.removeAluno(parseInt(id));
-    res.redirect('/alunos');
-}
-
-exports.getAlunosPorMonitoria = (req, res) => {
-    const { data, horario, disciplina, serie } = req.query;
-
-    Aluno.getAlunosPorMonitoria(data, horario, disciplina, serie, (alunos) => {
-        res.render('index', { alunos });
-    });
-}
+exports.createAluno = async (req, res) => {
+  try {
+    const { nome, email } = req.body;
+    const aluno = await Aluno.create(nome, email);
+    res.status(201).json(aluno);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
