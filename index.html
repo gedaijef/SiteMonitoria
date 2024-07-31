@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Monitoria J&F</title>
+    
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/media-query.css">
+    <script src="./js/scriptPopups.js" defer></script>
+    <script src="./js/scriptScript.js" defer></script>
+    <script src="./js/scriptConexao.js" defer></script>
+
+</head>
+
+<body >
+    <header>
+        <img src="../img/logoInstitutoPrincipal.png" alt="logo" class="logoInstituto">
+        <h1 class="text-header">Monitoria</h1>
+    </header>
+
+    <main class="main">
+        <div id="ptCima">
+            <div id="titulo" style="display: none;">
+                <h4>Série/Ano: <span class="nomeSelecaoSerie"></span></h4>
+                <h4>Turma: <span class="nomeSelecaoTurma"></span></h4>
+                <h4>Horários disponíveis para <span class="nomeSelecaoDisciplina"></span><h4>
+            </div>
+            <div id="selecoes">
+                <div id="selecaoSerie">
+                    <label for="serie">Série/Ano</label>
+                    <select id="serie" aria-label="Selecione a série">
+                        <option value="">Selecionar</option>
+                    </select>
+                </div>
+
+                <div id="selecaoTurma" style="display: none;">
+                    <label for="turma">Turma</label>
+                    <select id="turma" aria-label="Selecione a turma">
+                        <option value="">Selecionar</option>
+                    </select>
+                </div>
+
+                <div id="selecaoDisciplina" style="display: none;">
+                    <label for="disciplina">Disciplina</label>
+                    <select id="disciplina" aria-label="Selecione a disciplina">
+                        <option value="">Selecionar</option>
+                    </select>
+                </div>
+            </div>     
+            <div class="selecaoSemana">
+                <label for="semana">Data:</label>
+                <input type="date" id="data" nFame="data" >
+            </div>                              
+        </div>
+
+        <div class="tabela" style="display: none;">
+            <table class="calendar-table">
+
+                <caption class="calendar-caption">
+                    DD – DD de MM. de AAAA
+                </caption>
+
+                <thead>
+                    <tr>
+                        <th>Horários</th>
+                        <th id="horario-seg">Segunda</th>
+                        <th id="horario-ter">Terça</th>
+                        <th id="horario-qua">Quarta</th>
+                        <th id="horario-qui">Quinta</th>
+                        <th id="horario-sex">Sexta</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr><!-- 13h -->
+                        <th>13:00</th>
+                        <td class="diaSemana" data-dia="segunda" data-horario="13:00:00">
+                            <a class="event" tabindex="0" data-horario="13:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="terca" data-horario="13:00:00">
+                            <a class="event" tabindex="0" data-horario="13:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="quarta" data-horario="13:00:00">
+                            <a class="event" tabindex="0" data-horario="13:00">
+                            </a>
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="quinta" data-horario="13:00:00">
+                            <a class="event" tabindex="0" data-horario="13:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="sexta" data-horario="13:00:00">
+                            <a class="event" tabindex="0" data-horario="13:00">
+                            </a>
+                        </td>
+                    </tr>
+                    <tr><!-- 14h -->
+                        <th>14:00</th>
+                        <td class="diaSemana" data-dia="segunda" data-horario="14:00:00">
+                            <a class="event" tabindex="0" data-horario="14:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="terca" data-horario="14:00:00">
+                            <a class="event" tabindex="0" data-horario="14:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="quarta" data-horario="14:00:00">
+                            <a class="event" tabindex="0" data-horario="14:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="quinta" data-horario="14:00:00">
+                            <a class="event" tabindex="0" data-horario="14:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="sexta" data-horario="14:00:00">
+                            <a class="event" tabindex="0" data-horario="14:00">
+                            </a>
+                        </td>
+                    </tr>
+                    <tr><!-- 15h -->
+                        <th>15:00</th>
+                        <td class="diaSemana" data-dia="segunda" data-horario="15:00:00">
+                            <a class="event" tabindex="0" data-horario="15:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="terca" data-horario="15:00:00">
+                            <a class="event" tabindex="0" data-horario="15:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="quarta" data-horario="15:00:00">
+                            <a class="event" tabindex="0" data-horario="15:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="quinta" data-horario="15:00:00">
+                            <a class="event" tabindex="0" data-horario="15:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="sexta" data-horario="15:00:00">
+                            <a class="event" tabindex="0" data-horario="15:00">
+                            </a>
+                        </td>
+                    </tr>
+                    <tr><!-- 16h -->
+                        <th>16:00</th>
+                        <td class="diaSemana" data-dia="segunda" data-horario="16:00:00">
+                            <a class="event" tabindex="0" data-horario="16:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="terca" data-horario="16:00:00">
+                            <a class="event" tabindex="0" data-horario="16:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="quarta" data-horario="16:00:00">
+                            <a class="event" tabindex="0" data-horario="16:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="quinta" data-horario="16:00:00">
+                            <a class="event" tabindex="0" data-horario="16:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="sexta" data-horario="16:00:00">
+                            <a class="event" tabindex="0" data-horario="16:00">
+                            </a>
+                        </td>
+                    </tr>
+                    <tr><!-- 17h -->
+                        <th>17:00</th>
+                        <td class="diaSemana" data-dia="segunda" data-horario="17:00:00">
+                            <a class="event" tabindex="0" data-horario="17:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="terca" data-horario="17:00:00">
+                            <a class="event" tabindex="0" data-horario="17:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="quarta" data-horario="17:00:00">
+                            <a class="event" tabindex="0" data-horario="17:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="quinta" data-horario="17:00:00">
+                            <a class="event" tabindex="0" data-horario="17:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="sexta" data-horario="17:00:00">
+                            <a class="event" tabindex="0" data-horario="17:00">
+                            </a>
+                        </td>
+                    </tr>
+                    <tr><!-- 18h -->
+                        <th>18:00</th>
+                        <td class="diaSemana" data-dia="segunda" data-horario="18:00:00">
+                            <a class="event" tabindex="0" data-horario="18:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="terca" data-horario="18:00:00">
+                            <a class="event" tabindex="0" data-horario="18:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="quarta" data-horario="18:00:00">
+                            <a class="event" tabindex="0" data-horario="18:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="quinta" data-horario="18:00:00">
+                            <a class="event" tabindex="0" data-horario="18:00">
+                            </a>
+                        </td>
+                        <td class="diaSemana" data-dia="sexta" data-horario="18:00:00">
+                            <a class="event" tabindex="0" data-horario="18:00">
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Pop Up Lista de alunos -->
+    <section id="popupAlunos" class="popup">
+        <div class="popup-content">
+            <h2>Monitoria de <span class="nomeSelecaoDisciplina"></span></h2>
+            <h3>Lista de alunos neste horário:</h3>
+            <ul id="alunosList">
+
+            </ul>
+
+            <div class="container-btn">
+                <button class="btnClose" onclick="fecharPopUp1()">Cancelar</button>
+                <button id="btnAlunos" class="btn">Marcar</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Segundo popup para a confirmação de marcação -->
+    <section id="popupFormulario" class="popup">
+        <div class="popup-content">
+            
+            <h2>Marcar Monitoria de <span class="nomeSelecaoDisciplina"></span></h2>
+
+            <!-- Formulário de preenchimento -->
+            <form id="formulario">
+                <div id="inputs">
+                    <label>Nome:</label>
+                    <input type="text" id="nome" name="nome" required placeholder="Nome">
+
+                    <label>Email:</label>
+                    <input type="email" id="email" name="email" required placeholder="Email">
+                </div>
+
+                <!-- Inclua aqui a série selecionada anteriormente -->
+                <div class="container-btn">
+                    <button class="btnClose" onclick="fecharPopUp2()">Cancelar</button>
+                    <button id="btnFormulario" class="btn">Marcar</button>
+                    <button id="btnVoltar" class="btn" onclick="voltarPopUp()">Voltar</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Terceiro popup para a confirmação de marcação -->
+    <section id="popupConfirmacao" class="popup">
+        <div class="popup-content">
+            <h2>Monitoria Confirmada</h2>
+            <div id="alunoConfirmado">
+                <!-- Nome do aluno -->
+                <!-- Ano/Série -->
+                <!-- Email Aluno -->
+                <!-- Horário da marcação -->
+            </div>
+            <div class="container-btn">
+                <button class="btn" id="btnConfirmacao" onclick="fecharPopUpConfirmacao()">OK</button>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
