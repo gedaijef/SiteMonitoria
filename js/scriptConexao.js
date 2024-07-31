@@ -69,7 +69,11 @@ let series = [];
 let turmas = [];
 let disciplinas = [];
 let serieSemSufixo = "";
-let eventElement = null;
+let tdElement = null;
+
+let serieSelecionada;
+let turmaSelecionada;
+let disciplinaSelecionada;
 
 // função para pegar todas as séries e mostrar na interface
 async function atualizarSeries() {
@@ -124,7 +128,7 @@ function atualizarListaSeries() {
 // função para pegar todas as turmas e mostrar na interface
 async function atualizarTurmas() {
   const selecaoSerie = document.getElementById("serie");
-  const serieSelecionada = selecaoSerie.value;
+  serieSelecionada = selecaoSerie.value;
   serieSemSufixo = serieSelecionada.replace("° Série", "").replace("° Ano", "");
   console.log("serie sem sufixo:", serieSemSufixo);
 
@@ -232,7 +236,20 @@ async function atualizarHorarios() {
 }
 
 async function atualizarListaHorarios(horarios) {
+  const tdEvery = document.querySelectorAll(
+    "td.diaSemana.horario-disponivel"
+  );
 
+  tdEvery.forEach((td) => {
+    const pElements = td.querySelectorAll("p");
+
+    td.classList.remove("horario-disponivel");
+
+    pElements.forEach((p) => {
+      p.remove();
+    });
+  });
+  
   horarios.forEach((horario) => {
     console.log("Horário:", horario); // Adicione este log para inspecionar o objeto
 
@@ -244,15 +261,11 @@ async function atualizarListaHorarios(horarios) {
       `td.diaSemana[data-dia='${diaSemana}'][data-horario='${horarioInicio}']`
     );
 
-    // lógica para a exclusão
-    if (tdElement.classList.contains("horario-disponivel")) {
-      tdElement.classList.remove("horario-disponivel");
-    }
+    // // Seleciona o elemento <a> dentro do <td>
+    // eventElement = tdElement.querySelector("a.event");
 
-    // Seleciona o elemento <a> dentro do <td>
-    eventElement = tdElement.querySelector("a.event");
-
-    console.log("eventElement:", eventElement);
+    console.log("tdElement:", tdElement);
+    console.log("tdEvery:", tdEvery);
 
     if (tdElement) {
       console.log("tdElement:", tdElement);
@@ -263,15 +276,15 @@ async function atualizarListaHorarios(horarios) {
 
       // Adiciona o conteúdo <p> no elemento <a>
       if (horario.nome && horario.qnt_vagas) {
-        eventElement.innerHTML = `
+        tdElement.innerHTML = `
           <p>Professor: ${horario.nome}</p>
           <p>Vagas: ${horario.qnt_vagas}</p>`;
-        eventElement.style.cursor = "pointer"; // Define o cursor como pointer
-        eventElement.style.backgroundColor = ""; // Remove o fundo vermelho, caso tenha sido definido anteriormente
+        tdElement.style.cursor = "pointer"; // Define o cursor como pointer
+        tdElement.style.backgroundColor = ""; // Remove o fundo vermelho, caso tenha sido definido anteriormente
       } else {
         // Caso não tenha conteúdo, ajusta o estilo do <a>
-        eventElement.style.cursor = "default"; // Define o cursor como padrão
-        eventElement.style.backgroundColor = "red"; // Define o fundo vermelho
+        tdElement.style.cursor = "default"; // Define o cursor como padrão
+        tdElement.style.backgroundColor = "red"; // Define o fundo vermelho
       }
     } else {
       console.warn(
@@ -301,10 +314,10 @@ async function atualizarListaHorarios(horarios) {
 //       tdElement.classList.add("horario-disponivel");
 
 //       // Seleciona o elemento <a> dentro do <td>
-//       const eventElement = tdElement.querySelector("a.event");
+//       const tdElement = tdElement.querySelector("a.event");
 
 //       // Adiciona o conteúdo <p> no elemento <a>
-//       eventElement.innerHTML = `
+//       tdElement.innerHTML = `
 //         <p>Professor: ${horario.nome}</p>
 //         <p>Vagas: ${horario.qnt_vagas}</p>`;
 //     } else {

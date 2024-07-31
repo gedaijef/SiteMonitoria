@@ -5,10 +5,6 @@ let diaSelecionado = 0;
 let horarioSelecionado = 0;
 let teste = "";
 let vagas = 0;
-// const professores = {
-//   Matemática: "Moisés",
-//   Programação: "Giroto",
-// };
 let dataInicial = "";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -42,7 +38,9 @@ document.addEventListener("DOMContentLoaded", function () {
 // Isso aqui faz aparecer as opções de turma e disciplina dinamicamente (CERTO)
 document.getElementById("serie").addEventListener("change", function () {
   serieSelecionada = this.value;
-  document.getElementById("selecaoTurma").style.display = this.value ? "block" : "none";
+  document.getElementById("selecaoTurma").style.display = this.value
+    ? "block"
+    : "none";
   document.querySelector(".nomeSelecaoSerie").textContent = serieSelecionada;
   console.log(serieSelecionada);
   atualizarTurmas(serieSelecionada);
@@ -50,7 +48,9 @@ document.getElementById("serie").addEventListener("change", function () {
 
 document.getElementById("turma").addEventListener("change", function () {
   turmaSelecionada = this.value;
-  document.getElementById("selecaoDisciplina").style.display = this.value ? "block" : "none";
+  document.getElementById("selecaoDisciplina").style.display = this.value
+    ? "block"
+    : "none";
   document.querySelector(".nomeSelecaoTurma").textContent = turmaSelecionada;
   console.log(turmaSelecionada);
   // atualizarDisciplinas(turmaSelecionada);
@@ -75,7 +75,7 @@ document.getElementById("disciplina").addEventListener("change", function () {
   const tituloPopupFormulario = document.querySelector(
     "#popupFormulario h2 span.nomeSelecaoDisciplina"
   );
-  
+
   if (tituloPopupAlunos && tituloPopupFormulario) {
     tituloPopupAlunos.textContent = disciplinaSelecionada;
     tituloPopupFormulario.textContent = disciplinaSelecionada;
@@ -109,38 +109,31 @@ document.getElementById("disciplina").addEventListener("change", function () {
 
 // Função para adicionar os listeners, faz com que apareca o popup quando apertar no event (CERTO)
 function adicionarListeners() {
-  document.querySelectorAll(".event").forEach((eventLink) => {
+  document.querySelectorAll(".diaSemana").forEach((eventLink) => {
     eventLink.addEventListener("click", function () {
-      const horarioSelecionado = this.getAttribute("data-horario");
       const colunaIndex = this.parentElement.cellIndex;
-      const th = document.querySelector(
-        `.calendar-table thead th:nth-child(${colunaIndex})`
-      );
-      const dataSelecionada = th.getAttribute("data-date");
+      // const th = document.querySelector(
+      //   `.calendar-table thead th:nth-child(${colunaIndex})`
+      // );
+      const horarioSelecionado = this.getAttribute("data-horario");
+      const dataSelecionada = this.getAttribute("data-dia");
 
-      console.log(
-        "Evento clicado - Data: ",
-        dataSelecionada,
-        " Horário: ",
-        horarioSelecionado,
-        " Disciplina: ",
-        disciplinaSelecionada
-      );
+      // console.log(
+      //   "Evento clicado - Data: ",
+      //   dataSelecionada,
+      //   " Horário: ",
+      //   horarioSelecionado,
+      //   " Disciplina: ",
+      //   disciplinaSelecionada
+      // );
 
       inicializarEstruturaDeDados(dataSelecionada);
-      if (
-        alunosPorHorario[dataSelecionada][horarioSelecionado][
-          disciplinaSelecionada
-        ].vagas > 0
-      ) {
-        mostrarPopupAlunos(
-          dataSelecionada,
-          horarioSelecionado,
-          disciplinaSelecionada
-        );
-      } else {
-        window.alert("Não temos vagas disponíveis");
-      }
+
+      mostrarPopupFormulario(
+        dataSelecionada,
+        horarioSelecionado,
+        disciplinaSelecionada
+      );
     });
   });
 }
@@ -148,7 +141,6 @@ function adicionarListeners() {
 // Função sla o que mas funciona e se tirar da erro
 function conteudoEvent() {
   document.querySelectorAll("a.event").forEach((eventLink) => {
-    
     const horario = eventLink.getAttribute("data-horario");
     const disciplinaSelecionada = document.getElementById("disciplina").value;
 
@@ -159,11 +151,11 @@ function conteudoEvent() {
       );
       const dataSelecionada = th.getAttribute("data-date");
 
-      mostrarPopupAlunos(dataSelecionada, horario, disciplinaSelecionada);
+      mostrarPopupFormulario(dataSelecionada, horario, disciplinaSelecionada);
     });
 
     inicializarEstruturaDeDados(dataInicial);
-    vagas = alunosPorHorario[dataInicial][horario][disciplinaSelecionada].vagas;
+    // vagas = alunosPorHorario[dataInicial][horario][disciplinaSelecionada].vagas;
 
     // eventLink.innerHTML = `
     //   <p>${disciplinaSelecionada}</p>
@@ -241,44 +233,65 @@ function inicializarEstruturaDeDados(dataSelecionada) {
   }
 }
 
-function mostrarPopupAlunos(dataSelecionada, horario, disciplinaSelecionada) {
-  if (
-    !alunosPorHorario[dataSelecionada] ||
-    !alunosPorHorario[dataSelecionada][horario] ||
-    !alunosPorHorario[dataSelecionada][horario][disciplinaSelecionada]
-  ) {
-    inicializarEstruturaDeDados(dataSelecionada); // Inicializa dados se não estiverem disponíveis
-  } else {
-    const alunosList = document.getElementById("alunosList");
-    alunosList.innerHTML = ""; // Limpa a lista de alunos
+// function mostrarPopupAlunos(dataSelecionada, horario, disciplinaSelecionada) {
+//   if (
+//     !alunosPorHorario[dataSelecionada] ||
+//     !alunosPorHorario[dataSelecionada][horario] ||
+//     !alunosPorHorario[dataSelecionada][horario][disciplinaSelecionada]
+//   ) {
+//     inicializarEstruturaDeDados(dataSelecionada); // Inicializa dados se não estiverem disponíveis
+//   } else {
+//     const alunosList = document.getElementById("alunosList");
+//     alunosList.innerHTML = ""; // Limpa a lista de alunos
 
-    const alunos =
-      alunosPorHorario[dataSelecionada][horario][disciplinaSelecionada].alunos;
+//     const alunos =
+//       alunosPorHorario[dataSelecionada][horario][disciplinaSelecionada].alunos;
 
-    if (alunos.length === 0) {
-      alunosList.innerHTML = "<li>Nenhum aluno marcado</li>";
-    } else {
-      alunos.forEach((aluno) => {
-        const li = document.createElement("li");
-        li.textContent = aluno.nome;
-        alunosList.appendChild(li);
-      });
-    }
+//     if (alunos.length === 0) {
+//       alunosList.innerHTML = "<li>Nenhum aluno marcado</li>";
+//     } else {
+//       alunos.forEach((aluno) => {
+//         const li = document.createElement("li");
+//         li.textContent = aluno.nome;
+//         alunosList.appendChild(li);
+//       });
+//     }
 
-    document.getElementById("popupAlunos").style.display = "block";
-    document.getElementsByTagName("body")[0].style.overflow = "hidden";
+//     document.getElementById("popupAlunos").style.display = "block";
+//     document.getElementsByTagName("body")[0].style.overflow = "hidden";
 
-    let btnAlunos = document.getElementById("btnAlunos");
-    btnAlunos.dataset.dataSelecionada = dataSelecionada;
-    btnAlunos.dataset.horarioSelecionado = horario;
-    btnAlunos.dataset.disciplinaSelecionada = disciplinaSelecionada;
+//     let btnAlunos = document.getElementById("btnAlunos");
+//     btnAlunos.dataset.dataSelecionada = dataSelecionada;
+//     btnAlunos.dataset.horarioSelecionado = horario;
+//     btnAlunos.dataset.disciplinaSelecionada = disciplinaSelecionada;
 
-    btnAlunos.addEventListener("click", () => {
-      document.getElementById("popupFormulario").style.display = "block";
-      document.getElementById("popupAlunos").style.display = "none";
-    });
+//     btnAlunos.addEventListener("click", () => {
+//       document.getElementById("popupFormulario").style.display = "block";
+//       document.getElementById("popupAlunos").style.display = "none";
+//     });
 
-    // Chamar a função filtrarAlunos aqui com os parâmetros corretos
-    filtrarAlunos(dataSelecionada, disciplinaSelecionada, horario, serieSelecionada, turmaSelecionada);
-  }
+//     // Chamar a função filtrarAlunos aqui com os parâmetros corretos
+//     filtrarAlunos(dataSelecionada, disciplinaSelecionada, horario, serieSelecionada, turmaSelecionada);
+//   }
+// }
+
+function mostrarPopupFormulario(
+  dataSelecionada,
+  horario,
+  disciplinaSelecionada
+) {
+  btnFormulario = document.getElementById("btnFormulario");
+  inicializarEstruturaDeDados(dataSelecionada); // Inicializa dados se não estiverem disponíveis
+
+  document.getElementById("popupFormulario").style.display = "block";
+  document.getElementsByTagName("body")[0].style.overflow = "hidden";
+
+  btnFormulario.dataset.dataSelecionada = dataSelecionada;
+  btnFormulario.dataset.horarioSelecionado = horario;
+  btnFormulario.dataset.disciplinaSelecionada = disciplinaSelecionada;
+
+  btnFormulario.addEventListener("click", () => {
+    document.getElementById("popupConfirmacao").style.display = "block";
+    document.getElementById("popupFormulario").style.display = "none";
+  });
 }
