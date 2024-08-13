@@ -78,7 +78,7 @@ let disciplinaSelecionada;
 // função para pegar todas as séries e mostrar na interface
 async function atualizarSeries() {
   try {
-    const url = new URL("http://localhost:3000/api/series");
+    const url = new URL(`http://localhost:3000/api/horarios/filtrarHorarios?ano_serie=${serie.value}&disciplina=${disc.value}`);
     const response = await fetch(url, { method: "GET" });
 
     if (!response.ok) {
@@ -126,30 +126,30 @@ function atualizarListaSeries() {
 }
 
 // função para pegar todas as turmas e mostrar na interface
-async function atualizarTurmas() {
-  const selecaoSerie = document.getElementById("serie");
-  serieSelecionada = selecaoSerie.value;
-  serieSemSufixo = serieSelecionada.replace("° Série", "").replace("° Ano", "");
-  console.log("serie sem sufixo:", serieSemSufixo);
+// async function atualizarTurmas() {
+//   const selecaoSerie = document.getElementById("serie");
+//   serieSelecionada = selecaoSerie.value;
+//   serieSemSufixo = serieSelecionada.replace("° Série", "").replace("° Ano", "");
+//   console.log("serie sem sufixo:", serieSemSufixo);
 
-  try {
-    const url = new URL(`http://localhost:3000/api/turmas/porSerie`);
-    const params = { serie: serieSemSufixo };
-    url.search = new URLSearchParams(params).toString();
-    const response = await fetch(url, { method: "GET" });
+//   try {
+//     const url = new URL(`http://localhost:3000/api/turmas/porSerie`);
+//     const params = { serie: serieSemSufixo };
+//     url.search = new URLSearchParams(params).toString();
+//     const response = await fetch(url, { method: "GET" });
 
-    if (!response.ok) {
-      throw new Error(`Erro na solicitação: ${response.statusText}`);
-    }
+//     if (!response.ok) {
+//       throw new Error(`Erro na solicitação: ${response.statusText}`);
+//     }
 
-    const data = await response.json();
-    console.log("Resposta da API para turmas:", data); // Adicione este log
-    turmas = data;
-    atualizarListaTurmas();
-  } catch (error) {
-    console.error("Erro ao atualizar as turmas:", error);
-  }
-}
+//     const data = await response.json();
+//     console.log("Resposta da API para turmas:", data); // Adicione este log
+//     turmas = data;
+//     atualizarListaTurmas();
+//   } catch (error) {
+//     console.error("Erro ao atualizar as turmas:", error);
+//   }
+// }
 
 function atualizarListaTurmas() {
   const selecaoTurma = document.getElementById("turma");
