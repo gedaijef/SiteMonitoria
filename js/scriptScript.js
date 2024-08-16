@@ -110,47 +110,7 @@ let dataInicial = "";
 // }
 
 // Função para atualizar as celulas da tabela de acordo com o dia selecionado
-function atualizarCelulasTabela(date) {
-  const diasSemana = ["seg", "ter", "qua", "qui", "sex"];
-  const diasSemanaCompleto = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
-  const dateObj = new Date(date);
 
-  // Ajuste para iniciar na segunda-feira
-  const dayOfWeek = dateObj.getDay();
-  const difference = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-  dateObj.setDate(dateObj.getDate() - difference);
-
-  const ultimoDiaSemana = new Date(dateObj);
-  ultimoDiaSemana.setDate(dateObj.getDate() + 4);
-
-  // adicionar no calendario a semana
-  const caption = document.querySelector(".calendar-caption");
-  caption.textContent = `${dateObj.getDate()} – ${ultimoDiaSemana.getDate()} de ${ultimoDiaSemana.toLocaleString(
-    "pt-BR",
-    { month: "long" }
-  )} de ${ultimoDiaSemana.getFullYear()}`;
-
-  diasSemana.forEach((dia, index) => {
-    const dataAtual = new Date(dateObj);
-    dataAtual.setDate(dateObj.getDate() + index);
-    const formattedDate = dataAtual.toISOString().split("T")[0];
-    const diaMes = dataAtual.getDate();
-    const mes = dataAtual.getMonth() + 1; // Month is 0-indexed
-
-    const th = document.getElementById(`horario-${dia}`);
-    th.textContent = `${diasSemanaCompleto[index]} ${diaMes}/${mes}`;
-    th.setAttribute("data-date", formattedDate);
-
-    document
-      .querySelectorAll(`.diaSemana[data-dia="${dia}"] .event`)
-      .forEach((event) => {
-        event.setAttribute("data-data", formattedDate);
-        console.log("Data atribuída:", event.getAttribute("data-data"));
-      });
-  });
-
-  // adicionarListeners(); // Reconfigurar os listeners após atualização da tabela
-}
 
 // function inicializarEstruturaDeDados(dataSelecionada) {
 //   if (!alunosPorHorario[dataSelecionada]) {

@@ -6,14 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Monitoria J&F</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <link rel="stylesheet" href="./css/style.css">
     <!-- <link rel="stylesheet" href="./css/media-query.css"> -->
     <!-- <script src="./js/scriptPopups.js" defer></script> -->
     <!-- <script src="./js/scriptConexao.js" defer></script> -->
-    <script src="./js/script.js" defer></script>
+    <script src="./js/tabela.js" defer></script>
+    <script src="./js/popup.js" defer></script>
     <script src="./js/scriptScript.js" defer></script>
-  
+
 
 </head>
 
@@ -29,21 +32,12 @@
     <main class="main">
         <section id="filtros">
             <div class="selecaoSemana">
-                <label for="semana">Data da reserva:</label>
-                <input type="date" id="data" >
-            </div>
-            <div id="container-turma-select">
-                <label for="turma" id="turma-label">Turma</label>
-                <select name="turma" class="turma-select" onchange="habilitar_tabela()">
-                    <option value="" selected="" hidden=""></option>
-                    <option value="1">F</option>
-                    <option value="2">G</option>
-                    <option value="3">H</option>
-                </select>
+                <label for="semana" id="data-label">Data da monitoria</label>
+                <input type="date" id="data" class="data-select">
             </div>
             <div id="container-serie-select">
-                <label for="serie" id="serie-label">Série: </label>
-                <select name="serie" class="serie-select" onchange="habilitar_tabela()">
+                <label for="serie" id="serie-label">Série</label>
+                <select name="serie" class="serie-select">
                     <option value="" selected="" hidden=""></option>
                     <option value="1">1º</option>
                     <option value="2">2º</option>
@@ -52,12 +46,15 @@
             </div>
             <div id="container-disc-select">
                 <label for="disciplina" id="disc-label">Disciplina</label>
-                <select name="disc" class="disc-select" onchange="habilitar_tabela()">
+                <select name="disc" class="disc-select">
                     <option value="" selected="" hidden=""></option>
-                    <option value="1">Programação</option>
-                    <option value="2">Matemática</option>
+                    <option value="Programação">Programação</option>
+                    <option value="Matemática">Matemática</option>
                 </select>
             </div>
+            <button type="submit" id="enviar">
+                Enviar
+            </button>
         </section>
 
 
@@ -66,7 +63,10 @@
             <p id="msg-erro">Parece que nem todos os filtros foram preenchidos</p>
             <table class="calendar-table tabela-desativada">
                 <caption class="calendar-caption">
-                    DD – DD de MM. de AAAA
+                    <div id="caption-tabela">
+                        <p id="data-semanas">DD – DD de MM. de AAAA</p>
+                        <button id="marcar-monitoria">Marcar monitoria</button>
+                    </div>
                 </caption>
                 <thead>
                     <tr>
@@ -162,8 +162,58 @@
         </section>
 
     </main>
+
+    <div id="container-popup">
+        <section id="popup">
+            <header id="header-popup">
+                <h1 id="titulo-popup">Preencha as informações</h1>
+                <span class="material-symbols-outlined" id="btn-close" onclick="fechar_popup()">
+                    close
+                </span>
+            </header>
+            <section id="informacoes-popup">
+                <div id="selecoes-popup">
+                    <div>
+                        <label for="dia-semana" id="dia-semana-label">Dia da semana</label>
+                        <select name="dia-semana" class="dia-semana-select">
+                            <option value="" selected="" hidden=""></option>
+                            <option value="terça">Terça</option>
+                            <option value="quinta">Quinta</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="horario" id="horario-label">Horário</label>
+                        <select name="horario" class="horario-select">
+                            <option value="" selected="" hidden=""></option>
+                            <option value="15:30:00-16:30:00">15:30 - 16:30</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="nome" id="nome">Nome</label>
+                        <input type="text" id="nome">
+                    </div>
+                    <div>
+                        <label for="email" id="email">Email</label>
+                        <input type="email" id="email">
+                    </div>
+                    <label for="justificativa" id="justificativa">Justificativa</label>
+                    <textarea name="justificativa" id="justificativa-textarea" rows="5" maxlength="100" wrap="soft" cols="20"></textarea>
+                </div>
+                <div id="visualizacao-popup">
+                    <p>Serie: <span id="span-serie"></span></p>
+                    <p>Disciplina: <span id="span-disc"></span></p>
+                    <p>Professor: <span id="span-prof"></span></p>
+                    <p>Email: <span id="span-email"></span></p>
+                </div>
+            </section>
+            <nav id="btn-navegacao-popup">
+                <button onclick="fechar_popup()" id="btn-cancel-popup">Cancelar</button>
+                <button id="btn-marcar-popup">Marcar</button>
+            </nav>
+        </section>
+    </div>
     <!-- Pop Up Lista de alunos -->
-    <section id="popupAlunos" class="popup">
+    <!-- <section id="popupAlunos" class="popup">
         <div class="popup-content">
             <h2>Monitoria de <span class="nomeSelecaoDisciplina"></span></h2>
             <h3>Lista de alunos neste horário:</h3>
@@ -176,7 +226,7 @@
                 <button id="btnAlunos" class="btn">Marcar</button>
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- Segundo popup para a confirmação de marcação 
     <section id="popupFormulario" class="popup">

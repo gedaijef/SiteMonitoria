@@ -51,7 +51,7 @@ body {
     border-radius: 2.4px;
 }
 
-#header-pgn > h1 {
+#header-pgn>h1 {
     font-size: 1.7rem;
     font-weight: 600;
 }
@@ -71,7 +71,7 @@ main {
     row-gap: 1rem;
 }
 
-#container-serie-select, 
+#container-serie-select,
 #container-turma-select,
 #container-disc-select {
     display: flex;
@@ -79,20 +79,30 @@ main {
     gap: 1rem;
 }
 
-.serie-select, 
-.turma-select, 
-.disc-select {
-    width: 100%;
-    border-radius: 10px;
-    outline: none;
-    border: 1px solid var(--azul100);
-    cursor: pointer;
-    text-align: center;
-    padding-block: 0.5rem;
+.serie-select {
+    width: 5rem;
 }
 
-form {
-    margin-inline: 5rem;
+.disc-select {
+    width: 100%;
+}
+
+.serie-select,
+.disc-select,
+.dia-semana-select,
+.horario-select,
+#justificativa-textarea {
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid blue;
+    cursor: pointer;
+    text-align: center;
+    padding-block: 0.3rem;
+    padding-inline: 1rem;
+}
+
+#justificativa-textarea {
+    text-align: start;
 }
 
 .tabela {
@@ -118,6 +128,20 @@ form {
 .calendar-caption {
     text-align: center;
     margin-block: 1rem;
+}
+
+#caption-tabela {
+    display: grid;
+    grid-template-columns: 25% 50% 15%;
+}
+
+#data-semanas {
+    grid-column: 2;
+}
+
+#marcar-monitoria {
+    padding-inline: .2rem;
+    padding-block: .3rem;
 }
 
 .tabela table {
@@ -148,12 +172,10 @@ form {
 input[type=text],
 input[type=email] {
     outline: none;
-    margin-block: 0.8rem;
-    padding: 0.1rem;
-    border: none;
-    border-bottom: 1px solid blue;
-    background: #f2f2f2;
-    height: 2rem;
+    border: 1px solid blue;
+    padding-inline: .6rem;
+    padding-block: .3rem;
+    border-radius: .6rem;
 }
 
 .container-btn {
@@ -162,38 +184,18 @@ input[type=email] {
     margin-top: 1.3rem;
 }
 
-button {
+button, #btn-cancel-popup:hover {
     cursor: pointer;
     border: none;
-    padding: 0.4rem;
-    border-radius: 0.6rem;
-    margin-inline: 0.5rem;
+    border-radius: .6rem;
     border: 1px solid white;
-}
-
-.btn {
-    background-color: #4C5AAC;
     color: white;
-}
-
-.btn:hover,
-.btnClose {
-    background-color: #CCD0E7;
-    border: 1px solid #0d4f92;
-    color: #000;
+    background-color: var(--azul70);
     transition: .3s ease-in-out;
 }
 
-.btnClose:hover {
-    background-color: #1763b0;
-    border: none;
-    color: white;
-}
-
-.btn,
-.btnClose {
-    align-items: end;
-    justify-content: end;
+button:hover {
+    background-color: #818bc2;
 }
 
 #h2formulario {
@@ -262,7 +264,7 @@ button {
     margin-block: 0.5rem;
 }
 
-input[type="date"] {
+.data-select {
     border: 1px solid blue;
     border-radius: 0.6rem;
     padding: 0.5rem;
@@ -284,4 +286,90 @@ input[type="date"] {
     cursor: not-allowed;
     border-color: #b9b8b85c;
     background-color: #c9c6c65c;
+}
+
+.filtro-desativado:hover {
+    cursor: not-allowed;
+    border-color: #b9b8b85c;
+    background-color: #c9c6c65c;
+}
+
+#container-popup {
+    display: none;
+    background-color: #00000061;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+#popup {
+    display: none;
+    width: 30rem;
+    background-color: var(--white);
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 0.6rem;
+}
+
+#header-popup {
+    background-color: var(--azul100);
+    display: flex;
+    justify-content: space-between;
+    padding-inline: .5rem;
+    padding-block: .3rem;
+    border-radius: .6rem .6rem 0 0;
+}
+
+#titulo-popup {
+    color: white;
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+#btn-close {
+    color: var(--azul05);
+    cursor: pointer;
+}
+
+#informacoes-popup {
+    display: flex;
+    justify-content: space-around;
+    padding-block: 1.5rem;
+}
+
+#selecoes-popup {
+    display: flex;
+    flex-direction: column;
+}
+
+#selecoes-popup>div {
+    margin-block: .5rem;
+}
+
+#justificativa {
+    margin-block: .5rem;
+}
+
+textarea {
+    resize: none;
+}
+
+#btn-navegacao-popup {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 2rem;
+}
+
+#btn-cancel-popup {
+    background-color: transparent;
+    border-color: var(--azul70);
+    color: var(--azul70);
+}
+
+#btn-cancel-popup,
+#btn-marcar-popup {
+    padding-block: .3rem;
+    padding-inline: .4rem;
 }
