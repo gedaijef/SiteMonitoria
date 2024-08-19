@@ -36,6 +36,7 @@ btn_enviar.addEventListener('click', () => {
             btn_enviar.innerText = 'Editar'
             desabilitar_filtros()
             habilitar_btn_marcar()
+            console.log(calendario_monitoria())
         }
     }
     else {
