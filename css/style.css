@@ -132,6 +132,11 @@ main {
     background-color: #c9c6c6;
 }
 
+.cabecalho-ativo{
+    color: var(--white);
+    background-color: var(--azul100);
+}
+
 .calendar-caption {
     text-align: center;
     margin-block: 1rem;
@@ -156,7 +161,7 @@ main {
     border-collapse: collapse;
 }
 
-.tabela th {
+.tabela th{
     width: 4rem;
     height: 2rem;
     font-weight: 600;

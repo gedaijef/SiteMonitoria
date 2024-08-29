@@ -4,7 +4,8 @@ const msg_erro = document.getElementById('msg-erro')
 const calendar_table = document.getElementsByClassName('calendar-table')[0]
 const td = document.getElementsByTagName('td')
 const th = document.getElementsByTagName('th')
-
+const cabecalho = document.getElementsByClassName('cabecalho')
+const cabecalho_ativo = document.getElementsByClassName('cabecalho-ativo')
 const serie = document.getElementsByClassName('serie-select')[0]
 const serie_label = document.getElementById('serie-label')
 
@@ -82,6 +83,14 @@ function habilitar_tabela() {
         msg_erro.style.display = 'none'
         calendar_table.classList.remove('tabela-desativada')
 
+        for (let i = 0; i < cabecalho.length; i++) {
+            cabecalho[i].classList.remove('tabela-desativada')
+        }
+
+        for (let i = 0; i < cabecalho.length; i++) {
+            cabecalho[i].classList.add('cabecalho-ativo')
+        }
+
         for (let i = 0; i < td.length; i++) {
             td[i].style.borderColor = 'var(--azul100)'
         }
@@ -100,6 +109,14 @@ function habilitar_tabela() {
 function desabilitar_tabela() {
     msg_erro.style.display = 'block'
     calendar_table.classList.add('tabela-desativada')
+    for (let i = 0; i < cabecalho.length; i++) {
+        cabecalho[i].classList.add('tabela-desativada')
+    }
+
+    for (let i = 0; i < cabecalho.length; i++) {
+        cabecalho[i].classList.remove('cabecalho-ativo')
+    }
+
     for (let i = 0; i < td.length; i++) {
         td[i].style.borderColor = 'gray'
     }
