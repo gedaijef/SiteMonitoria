@@ -91,14 +91,31 @@ main {
 .disc-select,
 .dia-semana-select,
 .horario-select,
+#nome-input,
+#email-input,
 #justificativa-textarea {
+    width: 100%;
     border-radius: 10px;
     outline: none;
     border: 1px solid blue;
     cursor: pointer;
-    text-align: center;
     padding-block: 0.3rem;
     padding-inline: 1rem;
+    padding: 6px;   
+}
+
+
+#visualizacao-popup{
+    color: var(--white);
+    background-color: var(--azul100);
+    height: fit-content;
+    padding: 1rem;
+    border-radius: .6rem;
+    width: 100%;
+}
+
+#visualizacao-popup p span{
+    font-weight: 275;
 }
 
 #justificativa-textarea {
@@ -193,16 +210,28 @@ input[type=email] {
 .container-btn {
     justify-content: end;
     display: flex;
-    margin-top: 1.3rem;
+    margin: 1.3rem;
 }
 
 button, #btn-cancel-popup:hover {
+    padding: 0.5rem;
     cursor: pointer;
     border: none;
     border-radius: .6rem;
     border: 1px solid white;
     color: white;
-    background-color: var(--azul70);
+    background-color: var(--azul100);
+    transition: .3s ease-in-out;
+}
+
+button, #btn-marcar-popup:hover {
+    padding: 0.5rem;
+    cursor: pointer;
+    border: none;
+    border-radius: .6rem;
+    border: 1px solid white;
+    color: white;
+    background-color: var(--azul100);
     transition: .3s ease-in-out;
 }
 
@@ -316,7 +345,7 @@ button:hover {
 
 #popup {
     display: none;
-    width: 30rem;
+    width: 35rem;
     background-color: var(--white);
     position: relative;
     top: 50%;
@@ -331,6 +360,7 @@ button:hover {
     justify-content: space-between;
     padding-inline: .5rem;
     padding-block: .3rem;
+    padding: 1rem;;
     border-radius: .6rem .6rem 0 0;
 }
 
@@ -347,11 +377,13 @@ button:hover {
 
 #informacoes-popup {
     display: flex;
-    justify-content: space-around;
-    padding-block: 1.5rem;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: 1.5rem;
 }
 
 #selecoes-popup {
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
@@ -371,7 +403,14 @@ textarea {
 #btn-navegacao-popup {
     display: flex;
     justify-content: space-around;
-    padding-bottom: 2rem;
+    padding: 1.5rem;
+    padding-top: 0;
+    gap: 1rem;
+}
+
+#btn-marcar-popup {
+    background-color: var(--azul100);
+    color: var(--white);
 }
 
 #btn-cancel-popup {
@@ -382,6 +421,7 @@ textarea {
 
 #btn-cancel-popup,
 #btn-marcar-popup {
+    width: 100%;
     padding-block: .3rem;
     padding-inline: .4rem;
 }
