@@ -121,6 +121,13 @@ main {
     padding: .2rem;
 }
 
+#container-btn-tabela{
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
 .tabela-desativada {
     background-color: #c9c6c6;
 }
@@ -141,7 +148,7 @@ main {
 
 #marcar-monitoria {
     padding-inline: .2rem;
-    padding-block: .3rem;
+    padding: 0.5rem;
 }
 
 .tabela table {
