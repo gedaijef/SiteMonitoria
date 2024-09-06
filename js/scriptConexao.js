@@ -74,11 +74,12 @@ let tdElement = null;
 let serieSelecionada;
 let turmaSelecionada;
 let disciplinaSelecionada;
+let series_format;
 
 // função para pegar todas as séries e mostrar na interface
-async function atualizarSeries() {
+export async function atualizarSeries(dropdown_serie) {
   try {
-    const url = new URL(`http://localhost:3000/api/horarios/filtrarHorarios?ano_serie=${serie.value}&disciplina=${disc.value}`);
+    const url = new URL(`http://localhost:3000/series/listSeries`);
     const response = await fetch(url, { method: "GET" });
 
     if (!response.ok) {
@@ -86,9 +87,8 @@ async function atualizarSeries() {
     }
 
     series = await response.json();
-    console.log("series:", series);
     // Adicionando "° Ano/Série" a cada item individualmente, convertendo ano para string
-    series = series
+    series_format = series
       .map((serie) => {
         if (serie.ano_serie >= 1 && serie.ano_serie <= 3) {
           return serie.ano_serie.toString() + "° Série";
@@ -98,63 +98,32 @@ async function atualizarSeries() {
           return serie.ano_serie.toString();
         }
       })
-      .filter((serie) => serie !== undefined); // Filtrando valores undefined
-    console.log("Series:", series);
-    atualizarListaSeries();
+      .filter((serie) => serie !== undefined);
+    atualizarListaSeries(series, dropdown_serie);
   } catch (error) {
     console.error("Erro ao atualizar as séries:", error);
   }
 }
 
-function atualizarListaSeries() {
-  const selecaoSerie = document.getElementById("serie");
-  // Limpando as opções existentes
-  selecaoSerie.innerHTML = "";
+function atualizarListaSeries(series, dropdown_serie) {
+  dropdown_serie.innerHTML = "";
+  const options = dropdown_serie.querySelectorAll('option')
 
-  // Adicionando a opção nula
   const opcaoNula = document.createElement("option");
+  opcaoNula.selected = true;
   opcaoNula.value = "";
-  opcaoNula.textContent = "Selecionar";
-  selecaoSerie.appendChild(opcaoNula);
+  opcaoNula.textContent = "";
+  opcaoNula.hidden = true;
+  dropdown_serie.appendChild(opcaoNula);
 
   series.forEach((serie) => {
     const opcao = document.createElement("option");
-    opcao.value = serie;
-    opcao.textContent = serie;
-    selecaoSerie.appendChild(opcao);
+    opcao.value = serie.ano_serie;
+    opcao.textContent = serie.nome_ano_serie;
+    dropdown_serie.appendChild(opcao);
   });
 }
 
-// função para pegar todas as turmas e mostrar na interface
-// async function atualizarTurmas() {
-//   const selecaoSerie = document.getElementById("serie");
-//   serieSelecionada = selecaoSerie.value;
-//   serieSemSufixo = serieSelecionada.replace("° Série", "").replace("° Ano", "");
-//   console.log("serie sem sufixo:", serieSemSufixo);
-
-//   try {
-//     const url = new URL(`http://localhost:3000/api/turmas/porSerie`);
-//     const params = { serie: serieSemSufixo };
-//     url.search = new URLSearchParams(params).toString();
-//     const response = await fetch(url, { method: "GET" });
-
-//     if (!response.ok) {
-//       throw new Error(`Erro na solicitação: ${response.statusText}`);
-//     }
-
-//     const data = await response.json();
-//     console.log("Resposta da API para turmas:", data); // Adicione este log
-//     turmas = data;
-//     atualizarListaTurmas();
-//   } catch (error) {
-//     console.error("Erro ao atualizar as turmas:", error);
-//   }
-// }
-
-function atualizarListaTurmas() {
-  const selecaoTurma = document.getElementById("turma");
-  // Limpando as opções existentes
-  selecaoTurma.innerHTML = "";
 
   // Adicionando a opção nula
   const opcaoNula = document.createElement("option");
