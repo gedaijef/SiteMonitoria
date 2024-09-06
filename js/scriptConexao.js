@@ -147,39 +147,45 @@ function atualizarListaSeries(series, dropdown_serie) {
 }
 
 // função para pegar todas as disciplinas e mostrar na interface
-async function atualizarDisciplinas() {
+export async function atualizarDisciplinas(dropdown_disciplina, serie) {
   try {
-    const url = new URL("http://localhost:3000/api/disciplinas");
-    const response = await fetch(url, { method: "GET" });
-
+    const url = new URL("http://localhost:3000/disciplines/listDisciplines");
+    const body = {
+      ano_serie: serie,
+    };
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
     if (!response.ok) {
       throw new Error(`Erro na solicitação: ${response.statusText}`);
     }
 
-    disciplinas = await response.json();
+    const disciplinas = await response.json();
     console.log("Disciplinas:", disciplinas);
-    atualizarListaDisciplinas();
+    atualizarListaDisciplinas(disciplinas, dropdown_disciplina);
   } catch (error) {
     console.error("Erro ao atualizar as disciplinas:", error);
   }
 }
+function atualizarListaDisciplinas(disciplinas, dropdown_disciplina) {
+  dropdown_disciplina.innerHTML = "";
 
-function atualizarListaDisciplinas() {
-  const selecaoDisciplina = document.getElementById("disciplina");
-  // Limpando as opções existentes
-  selecaoDisciplina.innerHTML = "";
-
-  // Adicionando a opção nula
   const opcaoNula = document.createElement("option");
+  opcaoNula.selected = true;
   opcaoNula.value = "";
-  opcaoNula.textContent = "Selecionar";
-  selecaoDisciplina.appendChild(opcaoNula);
+  opcaoNula.textContent = "";
+  opcaoNula.hidden = true;
+  dropdown_disciplina.appendChild(opcaoNula);
 
   disciplinas.forEach((disciplina) => {
     const opcao = document.createElement("option");
     opcao.value = disciplina.nome;
     opcao.textContent = disciplina.nome;
-    selecaoDisciplina.appendChild(opcao);
+    dropdown_disciplina.appendChild(opcao);
   });
 }
 
