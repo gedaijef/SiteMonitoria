@@ -192,7 +192,6 @@ main {
 }
 
 .tabela td {
-    height: 3.5rem;
     border: 1px solid var(--azul100);
 }
 
