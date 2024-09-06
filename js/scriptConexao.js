@@ -70,7 +70,7 @@ let turmas = [];
 let disciplinas = [];
 let serieSemSufixo = "";
 let tdElement = null;
-
+const select_dia_semana = document.getElementsByClassName('dia-semana-select')[0]
 let serieSelecionada;
 let turmaSelecionada;
 let disciplinaSelecionada;
@@ -193,31 +193,36 @@ function atualizarListaDisciplinas(disciplinas, dropdown_disciplina) {
   });
 }
 
-// // função para pegar todos os horários e mostrar na interface
-async function atualizarHorarios() {
+// função para pegar todos os horários e mostrar na interface
+export async function atualizarHorarios(dt_inicio,dt_fim,serie,disciplina) {
   try {
-    const url = new URL(
-      `http://localhost:3000/api/horarios/filtrarHorarios?ano_serie=${serieSemSufixo}&disciplina=${disciplinaSelecionada}`
-    );
-    const response = await fetch(url, { method: "GET" });
-
+    const url = new URL("http://localhost:3000/schedules/filterSchedules");
+    const body = {
+      data_inicio : dt_inicio,
+      data_fim : dt_fim,
+      ano_serie : serie,
+      nome_disciplina : disciplina
+    };
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
     if (!response.ok) {
       throw new Error(`Erro na solicitação: ${response.statusText}`);
     }
 
-    const horarios = await response.json();
-    console.log("Horarios recebidos:", horarios); // Adicione este log para inspecionar os dados recebidos
-
-    atualizarListaHorarios(horarios);
+    const horario = await response.json();
+    return horario
   } catch (error) {
-    console.error("Erro ao atualizar os horarios:", error);
+    console.error("Erro ao atualizar as disciplinas:", error);
   }
 }
 
 async function atualizarListaHorarios(horarios) {
-  const tdEvery = document.querySelectorAll(
-    "td.diaSemana.horario-disponivel"
-  );
+  const tdEvery = document.querySelectorAll("td.diaSemana.horario-disponivel");
 
   tdEvery.forEach((td) => {
     const pElements = td.querySelectorAll("p");
