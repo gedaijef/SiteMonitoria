@@ -124,27 +124,31 @@ function atualizarListaSeries(series, dropdown_serie) {
   });
 }
 
+// function atualizarListaTurmas() {
+//   const selecaoTurma = document.getElementById("turma");
+//   // Limpando as opções existentes
+//   selecaoTurma.innerHTML = "";
 
-  // Adicionando a opção nula
-  const opcaoNula = document.createElement("option");
-  opcaoNula.value = "";
-  opcaoNula.textContent = "Selecionar";
-  selecaoTurma.appendChild(opcaoNula);
+//   // Adicionando a opção nula
+//   const opcaoNula = document.createElement("option");
+//   opcaoNula.value = "";
+//   opcaoNula.textContent = "Selecionar";
+//   selecaoTurma.appendChild(opcaoNula);
 
-  if (turmas.length === 0) {
-    const opcao = document.createElement("option");
-    opcao.textContent = "Nenhuma turma disponível";
-    selecaoTurma.appendChild(opcao);
-    return;
-  }
+//   if (turmas.length === 0) {
+//     const opcao = document.createElement("option");
+//     opcao.textContent = "Nenhuma turma disponível";
+//     selecaoTurma.appendChild(opcao);
+//     return;
+//   }
 
-  turmas.forEach((turma) => {
-    const opcao = document.createElement("option");
-    opcao.value = turma; // Verifique se 'nome' é a propriedade correta
-    opcao.textContent = turma;
-    selecaoTurma.appendChild(opcao);
-  });
-}
+//   turmas.forEach((turma) => {
+//     const opcao = document.createElement("option");
+//     opcao.value = turma; // Verifique se 'nome' é a propriedade correta
+//     opcao.textContent = turma;
+//     selecaoTurma.appendChild(opcao);
+//   });
+// }
 
 // função para pegar todas as disciplinas e mostrar na interface
 export async function atualizarDisciplinas(dropdown_disciplina, serie) {
@@ -236,9 +240,6 @@ async function atualizarListaHorarios(horarios) {
       `td.diaSemana[data-dia='${diaSemana}'][data-horario='${horarioInicio}']`
     );
 
-    // // Seleciona o elemento <a> dentro do <td>
-    // eventElement = tdElement.querySelector("a.event");
-
     console.log("tdElement:", tdElement);
     console.log("tdEvery:", tdEvery);
 
@@ -268,35 +269,3 @@ async function atualizarListaHorarios(horarios) {
     }
   });
 }
-
-// async function atualizarListaHorarios(horarios) {
-//   horarios.forEach((horario) => {
-//     console.log("Horário:", horario); // Adicione este log para inspecionar o objeto
-
-//     const diaSemana = horario.dia_semana;
-//     const horarioInicio = horario.horario_inicio;
-
-//     // Selecione o td correspondente usando data attributes
-//     const tdElement = document.querySelector(
-//       `td.diaSemana[data-dia='${diaSemana}'][data-horario='${horarioInicio}']`
-//     );
-
-//     if (tdElement) {
-//       console.log("tdElement:", tdElement);
-//       console.log("Professor:", horario.nome);
-//       console.log("Vagas:", horario.qnt_vagas);
-
-//       tdElement.classList.add("horario-disponivel");
-
-//       // Seleciona o elemento <a> dentro do <td>
-//       const tdElement = tdElement.querySelector("a.event");
-
-//       // Adiciona o conteúdo <p> no elemento <a>
-//       tdElement.innerHTML = `
-//         <p>Professor: ${horario.nome}</p>
-//         <p>Vagas: ${horario.qnt_vagas}</p>`;
-//     } else {
-//       console.warn(`Elemento td.diaSemana[data-dia='${diaSemana}'][data-horario='${horarioInicio}'] não encontrado`);
-//     }
-//   });
-// }
