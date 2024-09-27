@@ -1,8 +1,18 @@
 import {atualizarDisciplinas} from './scriptConexao.js'
 import {atualizarSeries} from './scriptConexao.js'
 import {atualizarHorarios} from './scriptConexao.js'
+import { mandarMonitoria } from './scriptConexao.js'
+import { response_geral } from './scriptConexao.js'
+import { atualizarSelects } from './scriptConexao.js'
 
+const container_popup = document.getElementById('container-popup')
+const popup = document.getElementById('popup')
+const body = document.getElementsByTagName('body')[0]
 let alunosPorHorario = {};
+const semana_select = document.getElementById("dia-semana-select")
+const horario_select = document.getElementById("horario-select")
+const nome_input = document.getElementById("nome-input")
+const email_input = document.getElementById("email-input")
 let status = ["Livre", "Indisponível", "Ocupado"];
 let numeroInicialDeVagas = 5;
 let diaSelecionado = 0;
@@ -16,20 +26,73 @@ let disciplina
 let serie
 let professor
 let email
+let horariosMonitoria = []
+const btn_marcar = document.getElementById("marcar-monitoria");
 
 const dropdown_disciplina = document.getElementsByClassName('disc-select')[0];
 const dropdown_serie = document.getElementsByClassName("serie-select")[0];
 const dropdown_data = document.getElementsByClassName("data-select")[0];
 const btn_enviar = document.getElementById("enviar");
 const data = document.getElementById("data");
-const btn_marcar = document.getElementById("marcar-monitoria");
+const limpar = document.getElementById("limpar")
 
-dropdown_serie.addEventListener("change", () => {
-    habilitar_filtro_disciplina()
-    atualizarDisciplinas(dropdown_disciplina,dropdown_serie.value)
-    if(verificar_filtros()){
-        habilitar_btn_enviar()
+
+btn_marcar.addEventListener("click", ()=>{
+    const response = JSON.stringify(response_geral,null,2)
+    console.log(mandarMonitoria(response))
+})
+
+limpar.addEventListener("click",()=>{
+    horario_select.innerHTML = "";
+    semana_select.innerHTML = "";
+    email_input.innerHTML = "";
+    nome_input.innerHTML = "";
+    atualizarSelects(null,null)
+    habilitar_select_semana()
+})
+
+semana_select.addEventListener("change", () => {
+    habilitar_select_horario();
+    desabilitar_select_semana();
+    if(verificar_forms()){
+        habilitar_btn_marcar()
     }
+})
+horario_select.addEventListener("change", () => {
+    desabilitar_select_horario();
+    if(verificar_forms()){
+        habilitar_btn_marcar()
+    }
+})
+
+nome_input.addEventListener("change", () => {
+    if (nome_input.value === "") {
+        desabilitar_btn_marcar()
+      }if (verificar_forms()) {
+        habilitar_btn_marcar();
+      }
+})
+email_input.addEventListener("change", () => {
+  if (email_input.value === "") {
+    desabilitar_btn_marcar()
+  }if (verificar_forms()) {
+    habilitar_btn_marcar();
+  }
+});
+
+
+// btn_enviar.addEventListener("click", () => {
+//     if (btn_enviar.textContent.trim() == "Enviar") {
+//       if (verificar_filtros()) {
+//         btn_enviar.innerText = "Editar";
+//       }
+//     } else {
+//       btn_enviar.innerText = "Enviar";
+//     }
+//   });
+
+dropdown_disciplina.addEventListener("focus",()=>{
+    atualizarDisciplinas(dropdown_disciplina,dropdown_serie.value);
 });
 
 dropdown_disciplina.addEventListener("change",()=>{
@@ -46,24 +109,18 @@ dropdown_data.addEventListener("change",()=>{
 
 dropdown_serie.addEventListener("focus", ()=>{
     atualizarSeries(dropdown_serie)
-
 });
 
-btn_marcar.addEventListener('click',()=>{
-    abrir_popup(dropdown_serie.value,dropdown_disciplina.textContent,professor,email)
+dropdown_serie.addEventListener("change",()=>{
+    habilitar_filtro_disciplina();
 })
 
 btn_enviar.addEventListener('click',()=>{
-    capturaHorario(data.value)
-    disciplina = dropdown_disciplina.value
-    serie = dropdown_serie.value
-    let horarios = atualizarHorarios(dt_inicio,dt_fim,serie,disciplina)
-    horarios.then(monitoria => {
-        console.log(monitoria)
-        email = monitoria[0].professor_email;
-        professor = monitoria[0].professor_nome;
-    });
+    console.log(capturaHorario(data.value))
+    atualizarHorarios(dt_inicio,dt_fim,dropdown_serie.value,dropdown_disciplina.value)
 })
+
+
 
 function capturaHorario(date) {
     const dateObj = new Date(date);

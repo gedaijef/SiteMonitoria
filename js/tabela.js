@@ -11,16 +11,25 @@ const cabecalho = document.getElementsByClassName("cabecalho");
 const cabecalho_ativo = document.getElementsByClassName("cabecalho-ativo");
 const serie_label = document.getElementById("serie-label");
 const serie_select = document.getElementById("serie-select");
-
+const semana_select = document.getElementById("dia-semana-select")
+const semana_select_label = document.getElementById("dia-semana-label")
+const horario_select = document.getElementById("horario-select")
+const horario_select_label = document.getElementById("horario-label")
+const nome_input = document.getElementById("nome-input")
+const email_input = document.getElementById("email-input")
 const disc = document.getElementsByClassName("disc-select")[0];
 const disc_label = document.getElementById("disc-label");
 
 const btn_enviar = document.getElementById("enviar");
 const btn_marcar = document.getElementById("marcar-monitoria");
 
+const form = document.getElementById('informacoes-popup');
+const section_envio = document.getElementById('div-legenda-semana');
+
 desabilitar_filtro_disciplina();
 desabilitar_btn_enviar();
 desabilitar_btn_marcar();
+desabilitar_select_horario();
 
 
 for (let i = 0; i < td.length; i++) {
@@ -32,20 +41,21 @@ for (let i = 0; i < th.length; i++) {
 
 
 
+
 btn_enviar.addEventListener("click", () => {
   if (btn_enviar.textContent.trim() == "Enviar") {
     if (verificar_filtros()) {
-      habilitar_tabela();
+      // habilitar_tabela();
+      form.style.setProperty('display','flex')
+      section_envio.style.setProperty('display','flex')
       btn_enviar.innerText = "Editar";
       desabilitar_filtros();
-      habilitar_btn_marcar();
-      console.log(calendario_monitoria());
     }
   } else {
     btn_enviar.innerText = "Enviar";
-    desabilitar_tabela();
+    form.style.setProperty('display','none')
+    section_envio.style.setProperty('display','none')
     habilitar_filtros();
-    desabilitar_btn_marcar();
   }
 });
 
@@ -59,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   data.addEventListener("change", function () {
     if (data.value != "") {
-      atualizarCelulasTabela(data.value);
+      // atualizarCelulasTabela(data.value);
     } else {
       msg_erro.style.display = "block";
       calendar_table.classList.add("tabela-desativada");
@@ -69,6 +79,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function verificar_filtros() {
   if (data.value == "" || serie.value == "" || disc.value == "") {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function verificar_forms(){
+  if (nome_input.value == "" || email_input.value == "" || semana_select.value == "" || horario_select.value == "") {
     return false;
   } else {
     return true;
@@ -160,6 +178,30 @@ function desabilitar_filtro_disciplina() {
   disc.setAttribute("disabled", "disabled");
   disc.classList.add("filtro-desativado");
   disc_label.classList.add("label-filtro-desativado");
+}
+
+function habilitar_select_semana() {
+  semana_select.removeAttribute("disabled");
+  semana_select.classList.remove("filtro-desativado");
+  semana_select_label.classList.remove("label-filtro-desativado");
+}
+
+function desabilitar_select_semana() {
+  semana_select.setAttribute("disabled", "disabled");
+  semana_select.classList.add("filtro-desativado");
+  semana_select_label.classList.add("label-filtro-desativado");
+}
+
+function habilitar_select_horario() {
+  horario_select.removeAttribute("disabled");
+  horario_select.classList.remove("filtro-desativado");
+  horario_select_label.classList.remove("label-filtro-desativado");
+}
+
+function desabilitar_select_horario() {
+  horario_select.setAttribute("disabled", "disabled");
+  horario_select.classList.add("filtro-desativado");
+  horario_select_label.classList.add("label-filtro-desativado");
 }
 
 function habilitar_btn_marcar() {
