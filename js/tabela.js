@@ -7,6 +7,12 @@ const msg_erro = document.getElementById("msg-erro");
 const calendar_table = document.getElementsByClassName("calendar-table")[0];
 const td = document.getElementsByTagName("td");
 const th = document.getElementsByTagName("th");
+
+const retorno = document.getElementById("retorno")
+const titulo_retorno = document.getElementById("titulo-retorno")
+const desc_retorno = document.getElementById("desc-retorno")
+const img_retorno = document.getElementById("img-retorno")
+
 const cabecalho = document.getElementsByClassName("cabecalho");
 const cabecalho_ativo = document.getElementsByClassName("cabecalho-ativo");
 const serie_label = document.getElementById("serie-label");
@@ -30,6 +36,7 @@ desabilitar_filtro_disciplina();
 desabilitar_btn_enviar();
 desabilitar_btn_marcar();
 desabilitar_select_horario();
+desabilitar_retorno()
 
 
 for (let i = 0; i < td.length; i++) {
@@ -38,7 +45,6 @@ for (let i = 0; i < td.length; i++) {
 for (let i = 0; i < th.length; i++) {
   th[i].style.borderColor = "gray";
 }
-
 
 
 
@@ -138,6 +144,17 @@ function desabilitar_tabela() {
   for (let i = 0; i < th.length; i++) {
     th[i].style.borderColor = "gray";
   }
+}
+
+function habilitar_retorno(path_img,titulo,descricao){
+  img_retorno.src = path_img
+  titulo_retorno.innerText = titulo
+  desc_retorno.innerText = descricao
+  retorno.style.display = "block"
+}
+
+function desabilitar_retorno(){
+  retorno.style.display = "none"
 }
 
 function habilitar_filtros() {

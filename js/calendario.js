@@ -11,7 +11,7 @@
 //         },
 //         body: JSON.stringify(dados)
 //     })
-//         .then(response => response.json())
+//         .then(response => response.z())
 //         .then(data => {
 //             console.log('Success:', data);
 //         })

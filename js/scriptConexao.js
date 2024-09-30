@@ -117,6 +117,7 @@ export async function atualizarHorarios(dt_inicio, dt_fim, serie, disciplina) {
     }
 
     const horario = await response.json();
+    console.log(horario)
     response_geral = horario;
     atualizarListaHorarios(horario);
     montarCards(horario);
@@ -304,9 +305,7 @@ function preencherFormulario({ dia_semana, horario }) {
     (response) =>
       response.dia_semana === dia_semana
   );
-  find.forEach((finded) => {
-    atualizarSelects(dia_semana,horario)
-  })
+  atualizarSelects(dia_semana,horario)
 }
 
 export async function mandarMonitoria(horarios) {
@@ -340,8 +339,9 @@ export async function mandarMonitoria(horarios) {
     data_fim: final_semana,
     nome_aluno: aluno_nome,
     email_aluno: aluno_email,
-    id_horarios: horario_id,
+    id_horarios: horario_id
   };
+  
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -349,16 +349,8 @@ export async function mandarMonitoria(horarios) {
     },
     body: JSON.stringify(body),
   });
-  if (!response.ok) {
-    throw new Error(`Erro na solicitação: ${response.statusText}`);
-  }
 
-  const horario = await response.json();
-  atualizarListaHorarios(horario);
-  // } catch (error) {
-  //   console.error("Erro ao atualizar as disciplinas:", error);
-  // }
-  return horario;
+  return response;
 }
 
 function getSemana(data) {
