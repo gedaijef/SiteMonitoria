@@ -45,11 +45,9 @@ atualizarSeries(dropdown_serie);
 btn_marcar.addEventListener("click", () => {
   const response = JSON.stringify(response_geral, null, 2);
   retornoApi = mandarMonitoria(response);
-  console.log(retornoApi);
   retornoApi
     .then((response) => response.json())
     .then((response) => {
-      console.log(response);
       if (response.status == 201) {
         habilitar_retorno("../img/sucesso.png", "Sucesso", response.message);
       } else habilitar_retorno("../img/erro.png", "Erro", response.message);

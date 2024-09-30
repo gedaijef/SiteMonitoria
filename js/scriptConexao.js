@@ -57,7 +57,6 @@ function atualizarListaSeries(series, dropdown_serie) {
 export async function atualizarDisciplinas(dropdown_disciplina, serie) {
   try {
     const url = new URL("http://localhost:3000/disciplines/listDisciplines");
-    console.log(serie);
     const body = {
       ano_serie: serie,
     };
@@ -73,7 +72,6 @@ export async function atualizarDisciplinas(dropdown_disciplina, serie) {
     }
 
     const disciplinas = await response.json();
-    console.log("Disciplinas:", disciplinas);
     atualizarListaDisciplinas(disciplinas, dropdown_disciplina);
   } catch (error) {
     console.error("Erro ao atualizar as disciplinas:", error);
@@ -117,7 +115,6 @@ export async function atualizarHorarios(dt_inicio, dt_fim, serie, disciplina) {
     }
 
     const horario = await response.json();
-    console.log(horario)
     response_geral = horario;
     atualizarListaHorarios(horario);
     montarCards(horario);
@@ -190,7 +187,6 @@ export async function atualizarSelects(diaSelecionado, horarioSelecionado) {
     });
   }
 
-  console.log('renato')
 }
 
 function atualizarListaHorarios(response) {
@@ -228,7 +224,6 @@ function atualizarListaHorarios(response) {
 
 export async function montarCards(response) {
   const days = document.querySelectorAll(".accordion-button");
-  console.log(response);
   days.forEach((button) => {
     button.addEventListener("click", function () {
       const panel = this.nextElementSibling;
@@ -296,9 +291,6 @@ export async function montarCards(response) {
 }
 
 function preencherFormulario({ dia_semana, horario }) {
-  console.log(response_geral)
-  console.log(dia_semana)
-  console.log(horario.split(' - ')[0])
   select_horario.innerHTML = ''
   select_semana.innerHTML = ''
   let find = response_geral.filter(
@@ -310,12 +302,10 @@ function preencherFormulario({ dia_semana, horario }) {
 
 export async function mandarMonitoria(horarios) {
   // try {
-  console.log(document.getElementById("data").value)
   getSemana(document.getElementById("data").value);
   
   const url = new URL("http://localhost:3000/monitorings/addMonitoring");
   let jsonArray = JSON.parse(horarios);
-  console.log(jsonArray);
   let resultado = jsonArray.find(
     (horario) =>
       horario.dia_semana ===
@@ -323,16 +313,9 @@ export async function mandarMonitoria(horarios) {
       horario.horario_inicio ===
         document.getElementById("horario-select").value.slice(0, 8)
   );
-  console.log(resultado);
   let horario_id = resultado["id_horario"];
   let aluno_nome = document.getElementById("nome-input").value;
   let aluno_email = document.getElementById("email-input").value;
-
-  console.log(aluno_nome);
-  console.log(aluno_email);
-  console.log(horario_id);
-  console.log(inicio_semana);
-  console.log(final_semana);
 
   const body = {
     data_inicio: inicio_semana,
