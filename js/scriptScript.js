@@ -50,11 +50,12 @@ btn_marcar.addEventListener("click", () => {
     .then((response) => {
       if (response.status == 201) {
         habilitar_retorno("../img/sucesso.png", "Sucesso", response.message);
-      } else habilitar_retorno("../img/erro.png", "Erro", response.message);
+      } else habilitar_retorno("../img/erro.png", "Erro", response.error);
     });
   });
 
 function limparForms(){
+  desabilitar_btn_marcar()
   horario_select.innerHTML = "";
   semana_select.innerHTML = "";
   email_input.value = "";
