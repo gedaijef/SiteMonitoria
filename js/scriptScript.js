@@ -104,16 +104,6 @@ btn_retorno.addEventListener("click", () => {
   desabilitar_retorno();
 });
 
-// btn_enviar.addEventListener("click", () => {
-//     if (btn_enviar.textContent.trim() == "Enviar") {
-//       if (verificar_filtros()) {
-//         btn_enviar.innerText = "Editar";
-//       }
-//     } else {
-//       btn_enviar.innerText = "Enviar";
-//     }
-//   });
-
 dropdown_disciplina.addEventListener("focus", () => {
   atualizarDisciplinas(dropdown_disciplina, dropdown_serie.value);
 });
