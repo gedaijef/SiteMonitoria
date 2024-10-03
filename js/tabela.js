@@ -50,6 +50,8 @@ for (let i = 0; i < th.length; i++) {
 
 btn_enviar.addEventListener("click", () => {
   if (btn_enviar.textContent.trim() == "Enviar") {
+    horario_select.innerHTML = "";
+    semana_select.innerHTML = "";
     if (verificar_filtros()) {
       // habilitar_tabela();
       form.style.setProperty('display','flex')
